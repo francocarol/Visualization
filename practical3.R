@@ -66,4 +66,27 @@ ggplot(movies,
                   expand = c(0.01, 0))
 
 
+# OTHER STUFF: changing key labels and order
+
+# way 1
+data(mpg, package = "ggplot2")
+
+mpg[mpg$drv == "4",]$drv = "4wd"
+mpg[mpg$drv == "f",]$drv = "Front"
+mpg[mpg$drv == "r",]$drv = "Rear"
+
+g = ggplot(data=mpg, aes(x=displ, y=hwy)) +
+  geom_point()
+
+g + stat_smooth(aes(colour=drv))
+
+#way 2
+data(mpg, package="ggplot2")
+mpg$drv = factor(mpg$drv, labels = c("4wd", "Front", "Rear"))
+mpg$drv = factor(mpg$drv,
+                 levels = c("Front", "Rear", "4wd"))
+g = ggplot(data=mpg, aes(x=displ, y=hwy)) +
+  geom_point()
+g + stat_smooth(aes(colour=drv))
+
              
